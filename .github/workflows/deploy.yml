@@ -1,0 +1,27 @@
+name: Python Service
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest #构建环境，如无特殊需要可以默认为ubuntu-latest
+
+    steps:  # 步骤
+    - uses: actions/checkout@v1    # 注释1
+    - name: Set up Python 3.7      # 使用python特定版本
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7        # 注释2
+    - name: Test                   # 第二步，注意上面actions/checkout@v1 为第一步
+      run: |
+        ls -all -h                 # 可以直接运行普通的linux命令
+        pwd                        # 注意此行输出，actions运行的默认路径是你的repo根目录
+        python -m pip install --upgrade pip       # 可直接运行普通的python命令
+        python ./python-service/test.py             # 开始测试
+    - name: Build
+      run: |
+        python ./python-service/build.py
+    - name: Deploy
+      run: |
+        python ./python-service/deploy_service.py
