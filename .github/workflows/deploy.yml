@@ -1,6 +1,9 @@
-name: Python Service
-
-on: [push]
+name: Test Actions
+on:
+  push: # 在 push 時觸發
+    branches:
+      - main
+  workflow_dispatch: # 允許手動觸發工作流程
 
 jobs:
   build:
